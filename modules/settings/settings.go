@@ -3,32 +3,43 @@ package settings
 import (
 	"io/ioutil"
 	"log"
-	"os"
-
-	"github.com/pkg/errors"
+	"time"
 )
 
 const (
-	version          = "3.0.0"
-	discordTokenPath = "./tokens/.discordtoken"
+	version            = "3.0.0"
+	discordTokenPath   = "./tokens/.discordtoken"
+	subdayDataPath     = "./backups/subday"
+	subdayDataDuration = 10 // in seconds
+
+	// Permitted roles in discord for subday
+	subRole1    = "433672344737677322"
+	subRole2    = "433680494635515904"
+	galchedRole = "301467455497175041"
+	smorcRole   = "301470784491356172"
 )
 
 type (
 	Settings struct {
-		Version      string
-		DiscordToken string
+		Version           string
+		DiscordToken      string
+		SubdayDataPath    string
+		SubdayJobDuration time.Duration
+		PermittedRoles    []string
 	}
 )
 
 func New() (*Settings, error) {
-	log.Print(os.Getwd())
 	discordToken, err := ioutil.ReadFile(discordTokenPath)
 	if err != nil {
-		return nil, errors.Wrap(err, "cannot read discord token file")
+		log.Print("settings: cannot read discord token file", err)
 	}
 
 	return &Settings{
-		Version:      version,
-		DiscordToken: string(discordToken),
+		Version:           version,
+		DiscordToken:      string(discordToken),
+		SubdayDataPath:    subdayDataPath,
+		SubdayJobDuration: subdayDataDuration * time.Second,
+		PermittedRoles:    []string{subRole1, subRole2, galchedRole, smorcRole},
 	}, nil
 }

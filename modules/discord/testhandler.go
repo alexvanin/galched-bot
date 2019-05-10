@@ -6,20 +6,20 @@ import (
 
 type testHandler struct{}
 
-var _ = (testHandler)(nil) // ignore unused warning
+var _ = testHandler{} // ignore unused warning
 
-func (t *testHandler) Signature() string {
+func (h *testHandler) Signature() string {
 	return "!test"
 }
 
-func (t *testHandler) Description() string {
+func (h *testHandler) Description() string {
 	return "тестовый хэндлер"
 }
 
-func (t *testHandler) IsValid(msg string) bool {
+func (h *testHandler) IsValid(msg string) bool {
 	return msg == "!test"
 }
 
-func (t *testHandler) Handle(s *discordgo.Session, m *discordgo.MessageCreate) {
+func (h *testHandler) Handle(s *discordgo.Session, m *discordgo.MessageCreate) {
 	LogMessage(m)
 }
