@@ -34,8 +34,8 @@ func start(p appParam) {
 	if err != nil {
 		log.Fatal("discord: cannot start instance", err)
 	}
-	log.Print("main: discord instance running")
-	log.Print("main: — — —")
+	log.Printf("main: discord instance running")
+	log.Printf("main: — — —")
 
 	<-p.Context.Done()
 	log.Print("main: stopping galched-bot")
