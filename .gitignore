@@ -1,2 +1,4 @@
 tokens/*token
 backups/*
+!backups/.gitignore
+!backups/*
