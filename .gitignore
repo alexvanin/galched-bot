@@ -1,4 +1,7 @@
 tokens/*token
+bin/*
+!bin/.gitkeep
+!bin/*
 backups/*
 !backups/.gitignore
 !backups/*
