@@ -3,14 +3,12 @@ package settings
 import (
 	"io/ioutil"
 	"log"
-	"time"
 )
 
 const (
-	version            = "3.0.0"
-	discordTokenPath   = "./tokens/.discordtoken"
-	subdayDataPath     = "./backups/subday"
-	subdayDataDuration = 10 // in seconds
+	version          = "3.0.1"
+	discordTokenPath = "./tokens/.discordtoken"
+	subdayDataPath   = "./backups/subday"
 
 	// Permitted roles in discord for subday
 	subRole1    = "433672344737677322"
@@ -21,11 +19,10 @@ const (
 
 type (
 	Settings struct {
-		Version           string
-		DiscordToken      string
-		SubdayDataPath    string
-		SubdayJobDuration time.Duration
-		PermittedRoles    []string
+		Version        string
+		DiscordToken   string
+		SubdayDataPath string
+		PermittedRoles []string
 	}
 )
 
@@ -36,10 +33,9 @@ func New() (*Settings, error) {
 	}
 
 	return &Settings{
-		Version:           version,
-		DiscordToken:      string(discordToken),
-		SubdayDataPath:    subdayDataPath,
-		SubdayJobDuration: subdayDataDuration * time.Second,
-		PermittedRoles:    []string{subRole1, subRole2, galchedRole, smorcRole},
+		Version:        version,
+		DiscordToken:   string(discordToken),
+		SubdayDataPath: subdayDataPath,
+		PermittedRoles: []string{subRole1, subRole2, galchedRole, smorcRole},
 	}, nil
 }

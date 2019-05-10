@@ -2,7 +2,6 @@ package discord
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -53,10 +52,7 @@ func (h *HandlerProcessor) Process(s *discordgo.Session, m *discordgo.MessageCre
 
 	if strings.HasPrefix(m.Content, "!galched") {
 		LogMessage(m)
-		_, err := s.ChannelMessageSend(m.ChannelID, h.HelpMessage())
-		if err != nil {
-			log.Printf("discord: cannot send message [%s]: %v", h.HelpMessage(), err)
-		}
+		SendMessage(s, m, h.HelpMessage())
 	}
 
 	for i := range h.handlers {

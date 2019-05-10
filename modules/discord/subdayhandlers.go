@@ -58,10 +58,7 @@ func (h *SubdayListHandler) Handle(s *discordgo.Session, m *discordgo.MessageCre
 			message += fmt.Sprintf("   **- %s** от _%s_\n", game, nickname)
 		}
 	}
-	_, err = s.ChannelMessageSend(m.ChannelID, strings.Trim(message, "\n"))
-	if err != nil {
-		log.Printf("discord: cannot send message [%s]: %v", message, err)
-	}
+	SendMessage(s, m, strings.Trim(message, "\n"))
 }
 
 type SubdayAddHandler struct {
