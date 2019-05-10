@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func NewGracefulContext() context.Context {
+func New() context.Context {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	go func() {

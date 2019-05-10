@@ -1,5 +1,13 @@
 package settings
 
+import (
+	"io/ioutil"
+	"log"
+	"os"
+
+	"github.com/pkg/errors"
+)
+
 const (
 	version          = "3.0.0"
 	discordTokenPath = "./tokens/.discordtoken"
@@ -7,14 +15,20 @@ const (
 
 type (
 	Settings struct {
-		Version          string
-		DiscordTokenPath string
+		Version      string
+		DiscordToken string
 	}
 )
 
-func NewSettings() Settings {
-	return Settings{
-		Version:          version,
-		DiscordTokenPath: discordTokenPath,
+func New() (*Settings, error) {
+	log.Print(os.Getwd())
+	discordToken, err := ioutil.ReadFile(discordTokenPath)
+	if err != nil {
+		return nil, errors.Wrap(err, "cannot read discord token file")
 	}
+
+	return &Settings{
+		Version:      version,
+		DiscordToken: string(discordToken),
+	}, nil
 }
