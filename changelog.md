@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.2 - 2019-05-31
+### Added
+- Command !subhistory
+- Info about 5th short subday
+
 ## 3.0.1 - 2019-05-10
 ### Added
 - Readme file

@@ -38,10 +38,7 @@ func (h *SubdayListHandler) Handle(s *discordgo.Session, m *discordgo.MessageCre
 		log.Print("discord: cannot obtain guild", err)
 		return
 	}
-	message := "Игры предыдущих сабдеев:\n**20.10.18**: _DmC_ -> _Fable 1_ -> _Overcooked 2_\n" +
-		"**17.11.18**: _The Witcher_ -> _Xenus: Белое Золото_ -> _NFS: Underground 2_\n" +
-		"**22.12.18**: _True Crime: Streets of LA_ -> _Serious Sam 3_ -> _Kholat_\n" +
-		"**26.01.19**: _Disney’s Aladdin_ -> _~~Gothic~~_ -> _Scrapland_ -> _Donut County_\n\n" +
+	message := "Игры предыдущих сабдеев доступны по команде **!subhistory**\n" +
 		"Список игр для следующего сабдея:\n"
 	for k, v := range h.subday.Database() {
 		nickname := " "
@@ -138,10 +135,32 @@ loop:
 	}
 }
 
+type SubdayHistoryHandler struct{}
+
+func (h *SubdayHistoryHandler) Signature() string {
+	return "!subhistory"
+}
+func (h *SubdayHistoryHandler) Description() string {
+	return "история прошлых сабдеев"
+}
+func (h *SubdayHistoryHandler) IsValid(msg string) bool {
+	return strings.HasPrefix(msg, "!subhistory")
+}
+func (h *SubdayHistoryHandler) Handle(s *discordgo.Session, m *discordgo.MessageCreate) {
+	LogMessage(m)
+	message := "Игры предыдущих сабдеев:\n**20.10.18**: _DmC_ -> _Fable 1_ -> _Overcooked 2_\n" +
+		"**17.11.18**: _The Witcher_ -> _Xenus: Белое Золото_ -> _NFS: Underground 2_\n" +
+		"**22.12.18**: _True Crime: Streets of LA_ -> _Serious Sam 3_ -> _Kholat_\n" +
+		"**26.01.19**: _Disney’s Aladdin_ -> _~~Gothic~~_ -> _Scrapland_ -> _Donut County_\n" +
+		"**24.02.19**: _Tetris 99_ -> _~~Bully~~_ -> _~~GTA: Vice City~~_"
+	SendMessage(s, m, message)
+}
+
 func SubdayHandlers(s *subday.Subday, r []string) []MessageHandler {
 	var result []MessageHandler
 
 	addHandler := &SubdayAddHandler{s, r}
 	listHandler := &SubdayListHandler{s}
-	return append(result, addHandler, listHandler)
+	histHandler := new(SubdayHistoryHandler)
+	return append(result, addHandler, listHandler, histHandler)
 }

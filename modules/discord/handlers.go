@@ -53,6 +53,7 @@ func (h *HandlerProcessor) Process(s *discordgo.Session, m *discordgo.MessageCre
 	if strings.HasPrefix(m.Content, "!galched") {
 		LogMessage(m)
 		SendMessage(s, m, h.HelpMessage())
+		return
 	}
 
 	for i := range h.handlers {
