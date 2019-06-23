@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.0 - 2019-06-23
+### Added
+- Twitch chat module
+- Twitch chat handler that calculates duplicates in chat
+
 ## 3.0.2 - 2019-06-03
 ### Added
 - Command !subhistory

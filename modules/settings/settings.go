@@ -6,8 +6,11 @@ import (
 )
 
 const (
-	version          = "3.0.2"
+	version          = "4.0.0"
+	twitchUser       = "galchedbot"
+	twitchIRCRoom    = "galched"
 	discordTokenPath = "./tokens/.discordtoken"
+	twitchTokenPath  = "./tokens/.twitchtoken"
 	subdayDataPath   = "./backups/subday"
 
 	// Permitted roles in discord for subday
@@ -21,6 +24,9 @@ type (
 	Settings struct {
 		Version        string
 		DiscordToken   string
+		TwitchUser     string
+		TwitchIRCRoom  string
+		TwitchToken    string
 		SubdayDataPath string
 		PermittedRoles []string
 	}
@@ -31,10 +37,17 @@ func New() (*Settings, error) {
 	if err != nil {
 		log.Print("settings: cannot read discord token file", err)
 	}
+	twitchToken, err := ioutil.ReadFile(twitchTokenPath)
+	if err != nil {
+		log.Print("settings: cannot read twitch token file", err)
+	}
 
 	return &Settings{
 		Version:        version,
 		DiscordToken:   string(discordToken),
+		TwitchToken:    string(twitchToken),
+		TwitchUser:     twitchUser,
+		TwitchIRCRoom:  twitchIRCRoom,
 		SubdayDataPath: subdayDataPath,
 		PermittedRoles: []string{subRole1, subRole2, galchedRole, smorcRole},
 	}, nil

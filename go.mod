@@ -2,6 +2,7 @@ module galched-bot
 
 require (
 	github.com/bwmarrin/discordgo v0.19.0
+	github.com/gempir/go-twitch-irc v1.1.0
 	github.com/pkg/errors v0.8.1
 	github.com/stretchr/testify v1.3.0 // indirect
 	go.uber.org/atomic v1.3.2 // indirect
