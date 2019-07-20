@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	version          = "4.0.0"
+	version          = "4.0.1"
 	twitchUser       = "galchedbot"
 	twitchIRCRoom    = "galched"
 	discordTokenPath = "./tokens/.discordtoken"

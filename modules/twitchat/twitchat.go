@@ -3,15 +3,14 @@ package twitchat
 import (
 	"galched-bot/modules/settings"
 
-	"github.com/gempir/go-twitch-irc"
-	_ "github.com/gempir/go-twitch-irc"
+	"github.com/gempir/go-twitch-irc/v2"
 )
 
 type (
 	TwitchIRC struct {
 		username string
 		chat     *twitch.Client
-		handlers []MessageHandler
+		handlers []PrivateMessageHandler
 	}
 )
 
@@ -23,7 +22,7 @@ func New(s *settings.Settings) (*TwitchIRC, error) {
 	irc.handlers = append(irc.handlers, DupHandler())
 
 	irc.chat = twitch.NewClient(s.TwitchUser, s.TwitchToken)
-	irc.chat.OnNewMessage(irc.MessageHandler)
+	irc.chat.OnPrivateMessage(irc.PrivateMessageHandler)
 	irc.chat.Join(s.TwitchIRCRoom)
 
 	return irc, nil
@@ -41,13 +40,13 @@ func (c *TwitchIRC) Stop() error {
 	return c.chat.Disconnect()
 }
 
-func (c *TwitchIRC) MessageHandler(ch string, u twitch.User, m twitch.Message) {
-	if u.Username == c.username {
+func (c *TwitchIRC) PrivateMessageHandler(msg twitch.PrivateMessage) {
+	if msg.User.Name == c.username {
 		return
 	}
 	for i := range c.handlers {
-		if c.handlers[i].IsValid(m.Text) {
-			c.handlers[i].Handle(ch, &u, &m, c.chat)
+		if c.handlers[i].IsValid(msg.Message) {
+			c.handlers[i].Handle(&msg, c.chat)
 		}
 	}
 }

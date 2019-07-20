@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1 - 2019-07-22
+### Changed
+- Twitch chat library version from v1 to v2
+
 ## 4.0.0 - 2019-06-23
 ### Added
 - Twitch chat module

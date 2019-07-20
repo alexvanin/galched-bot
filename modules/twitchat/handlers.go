@@ -1,12 +1,16 @@
 package twitchat
 
 import (
-	"github.com/gempir/go-twitch-irc"
+	"github.com/gempir/go-twitch-irc/v2"
 )
 
 type (
-	MessageHandler interface {
+	Responser interface {
+		Say(channel, message string)
+	}
+
+	PrivateMessageHandler interface {
 		IsValid(string) bool
-		Handle(ch string, u *twitch.User, m *twitch.Message, client *twitch.Client)
+		Handle(m *twitch.PrivateMessage, r Responser)
 	}
 )
