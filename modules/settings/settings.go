@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	version          = "4.0.1"
+	version          = "4.1.0"
 	twitchUser       = "galchedbot"
 	twitchIRCRoom    = "galched"
 	discordTokenPath = "./tokens/.discordtoken"
@@ -22,13 +22,15 @@ const (
 
 type (
 	Settings struct {
-		Version        string
-		DiscordToken   string
-		TwitchUser     string
-		TwitchIRCRoom  string
-		TwitchToken    string
-		SubdayDataPath string
-		PermittedRoles []string
+		Version             string
+		DiscordToken        string
+		TwitchUser          string
+		TwitchIRCRoom       string
+		TwitchToken         string
+		SubdayDataPath      string
+		PermittedRoles      []string
+		PolkaPath           string
+		DiscordVoiceChannel string
 	}
 )
 
@@ -43,12 +45,14 @@ func New() (*Settings, error) {
 	}
 
 	return &Settings{
-		Version:        version,
-		DiscordToken:   string(discordToken),
-		TwitchToken:    string(twitchToken),
-		TwitchUser:     twitchUser,
-		TwitchIRCRoom:  twitchIRCRoom,
-		SubdayDataPath: subdayDataPath,
-		PermittedRoles: []string{subRole1, subRole2, galchedRole, smorcRole},
+		Version:             version,
+		DiscordToken:        string(discordToken),
+		TwitchToken:         string(twitchToken),
+		TwitchUser:          twitchUser,
+		TwitchIRCRoom:       twitchIRCRoom,
+		SubdayDataPath:      subdayDataPath,
+		PolkaPath:           "songs/polka.dca",
+		DiscordVoiceChannel: "301793085522706432",
+		PermittedRoles:      []string{subRole1, subRole2, galchedRole, smorcRole},
 	}, nil
 }

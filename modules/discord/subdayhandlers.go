@@ -153,7 +153,8 @@ func (h *SubdayHistoryHandler) Handle(s *discordgo.Session, m *discordgo.Message
 		"**22.12.18**: _True Crime: Streets of LA_ -> _Serious Sam 3_ -> _Kholat_\n" +
 		"**26.01.19**: _Disney’s Aladdin_ -> _~~Gothic~~_ -> _Scrapland_ -> _Donut County_\n" +
 		"**24.02.19**: _Tetris 99_ -> _~~Bully~~_ -> _~~GTA: Vice City~~_\n" +
-		"**02.06.19**: _Spec Ops: The Line_ -> _Escape from Tarkov_\n"
+		"**02.06.19**: _Spec Ops: The Line_ -> _Escape from Tarkov_\n" +
+		"**28.07.19**: _Crypt of the Necrodancer_ -> _My Friend Pedro_ -> _Ape Out_\n"
 	SendMessage(s, m, message)
 }
 

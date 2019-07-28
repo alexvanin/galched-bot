@@ -1,11 +1,16 @@
 package discord
 
 import (
+	"encoding/binary"
 	"fmt"
+	"io"
 	"log"
+	"os"
 
 	"galched-bot/modules/settings"
 	"galched-bot/modules/subday"
+
+	"go.uber.org/atomic"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/pkg/errors"
@@ -31,6 +36,16 @@ func New(s *settings.Settings, subday *subday.Subday) (*Discord, error) {
 		processor.AddHandler(subdayHandler)
 	}
 
+	polka, err := loadSong(s.PolkaPath)
+	if err != nil {
+		return nil, errors.Wrap(err, "cannot read polka song")
+	}
+	processor.AddHandler(&polkaHandler{
+		polka:        polka,
+		voiceChannel: s.DiscordVoiceChannel,
+		lock:         atomic.NewBool(false),
+	})
+
 	log.Printf("discord: added %d message handlers", len(processor.handlers))
 	if len(processor.handlers) > 0 {
 		for i := range processor.handlers {
@@ -43,6 +58,48 @@ func New(s *settings.Settings, subday *subday.Subday) (*Discord, error) {
 		processor:  processor,
 		session:    instance,
 	}, nil
+}
+
+func loadSong(path string) ([][]byte, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, errors.Wrap(err, "error opening dca file")
+	}
+
+	var (
+		opuslen int16
+		buffer  = make([][]byte, 0)
+	)
+
+	for {
+		// Read opus frame length from dca file.
+		err = binary.Read(file, binary.LittleEndian, &opuslen)
+
+		// If this is the end of the file, just return.
+		if err == io.EOF || err == io.ErrUnexpectedEOF {
+			err := file.Close()
+			if err != nil {
+				return nil, err
+			}
+			return buffer, nil
+		}
+
+		if err != nil {
+			return nil, errors.Wrap(err, "error reading from dca file")
+		}
+
+		// Read encoded pcm from dca file.
+		InBuf := make([]byte, opuslen)
+		err = binary.Read(file, binary.LittleEndian, &InBuf)
+
+		// Should not be any end of file errors
+		if err != nil {
+			return nil, errors.Wrap(err, "error  reading from dca file")
+		}
+
+		// Append encoded pcm data to the buffer.
+		buffer = append(buffer, InBuf)
+	}
 }
 
 func LogMessage(m *discordgo.MessageCreate) {

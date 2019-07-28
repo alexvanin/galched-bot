@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.1.0 - 2019-07-28
+### Added
+- Song player handler
+
+## 4.0.2 - 2019-07-28
+### Changed
+- Info about 7th subday
+
 ## 4.0.1 - 2019-07-22
 ### Changed
 - Twitch chat library version from v1 to v2

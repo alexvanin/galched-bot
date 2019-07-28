@@ -5,7 +5,7 @@ require (
 	github.com/gempir/go-twitch-irc/v2 v2.2.0
 	github.com/pkg/errors v0.8.1
 	github.com/stretchr/testify v1.3.0 // indirect
-	go.uber.org/atomic v1.3.2 // indirect
+	go.uber.org/atomic v1.3.2
 	go.uber.org/dig v1.7.0 // indirect
 	go.uber.org/fx v1.9.0
 	go.uber.org/goleak v0.10.0 // indirect
