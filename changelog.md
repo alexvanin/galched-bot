@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.2.0 - 2019-10-20
+### Added
+- Universal song handler with polka and sax commands
+
+### Changed
+- Updated discordgo library up to v0.20.1
+
 ## 4.1.0 - 2019-07-28
 ### Added
 - Song player handler

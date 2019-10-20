@@ -3,10 +3,11 @@ package settings
 import (
 	"io/ioutil"
 	"log"
+	"time"
 )
 
 const (
-	version          = "4.1.0"
+	version          = "4.2.0"
 	twitchUser       = "galchedbot"
 	twitchIRCRoom    = "galched"
 	discordTokenPath = "./tokens/.discordtoken"
@@ -21,6 +22,14 @@ const (
 )
 
 type (
+	SongInfo struct {
+		Path        string
+		Signature   string
+		Description string
+		Permissions []string
+		Timeout     time.Duration
+	}
+
 	Settings struct {
 		Version             string
 		DiscordToken        string
@@ -29,8 +38,8 @@ type (
 		TwitchToken         string
 		SubdayDataPath      string
 		PermittedRoles      []string
-		PolkaPath           string
 		DiscordVoiceChannel string
+		Songs               []SongInfo
 	}
 )
 
@@ -51,8 +60,22 @@ func New() (*Settings, error) {
 		TwitchUser:          twitchUser,
 		TwitchIRCRoom:       twitchIRCRoom,
 		SubdayDataPath:      subdayDataPath,
-		PolkaPath:           "songs/polka.dca",
 		DiscordVoiceChannel: "301793085522706432",
 		PermittedRoles:      []string{subRole1, subRole2, galchedRole, smorcRole},
+		Songs: []SongInfo{
+			{
+				Path:        "songs/polka.dca",
+				Signature:   "!song",
+				Description: "сыграть гимн галчед (только для избранных",
+				Permissions: []string{"AlexV", "Rummy_Quamox", "Lidiya_owl"},
+				Timeout:     10 * time.Second,
+			},
+			{
+				Path:        "songs/whisper.dca",
+				Signature:   "!sax",
+				Description: "kreygasm",
+				Timeout:     20 * time.Second,
+			},
+		},
 	}, nil
 }
