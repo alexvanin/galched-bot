@@ -1,4 +1,5 @@
 tokens/*token
+tokens/*logins
 bin/*
 !./bin/.gitkeep
 !./bin/*
