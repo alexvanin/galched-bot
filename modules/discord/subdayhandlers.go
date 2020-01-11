@@ -55,6 +55,7 @@ func (h *SubdayListHandler) Handle(s *discordgo.Session, m *discordgo.MessageCre
 			message += fmt.Sprintf("   **- %s** от _%s_\n", game, nickname)
 		}
 	}
+	message += "\nВсе команды бота: !galched\n"
 	SendMessage(s, m, strings.Trim(message, "\n"))
 }
 
@@ -154,7 +155,8 @@ func (h *SubdayHistoryHandler) Handle(s *discordgo.Session, m *discordgo.Message
 		"**26.01.19**: _Disney’s Aladdin_ -> _~~Gothic~~_ -> _Scrapland_ -> _Donut County_\n" +
 		"**24.02.19**: _Tetris 99_ -> _~~Bully~~_ -> _~~GTA: Vice City~~_\n" +
 		"**02.06.19**: _Spec Ops: The Line_ -> _Escape from Tarkov_\n" +
-		"**28.07.19**: _Crypt of the Necrodancer_ -> _My Friend Pedro_ -> _Ape Out_\n"
+		"**28.07.19**: _Crypt of the Necrodancer_ -> _My Friend Pedro_ -> _Ape Out_\n" +
+		"\nВсе команды бота: !galched\n"
 	SendMessage(s, m, message)
 }
 

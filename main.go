@@ -4,13 +4,15 @@ import (
 	"context"
 	"log"
 
+	"go.uber.org/fx"
+
 	"galched-bot/modules/discord"
 	"galched-bot/modules/grace"
 	"galched-bot/modules/settings"
 	"galched-bot/modules/subday"
 	"galched-bot/modules/twitchat"
-
-	"go.uber.org/fx"
+	"galched-bot/modules/web"
+	"galched-bot/modules/youtube"
 )
 
 type (
@@ -23,6 +25,7 @@ type (
 		Discord  *discord.Discord
 		Settings *settings.Settings
 		Chat     *twitchat.TwitchIRC
+		Server   *web.WebServer
 	}
 )
 
@@ -47,9 +50,22 @@ func start(p appParam) error {
 	}
 	log.Printf("main: twitch chat instance running")
 
+	err = p.Server.Start()
+	if err != nil {
+		log.Print("web: cannot start instance", err)
+		return err
+	}
+	log.Printf("main: web server instance running")
+
 	log.Printf("main: — — —")
 	<-p.Context.Done()
 	log.Print("main: stopping galched-bot")
+
+	err = p.Server.Stop(p.Context)
+	if err != nil {
+		log.Print("web: cannot stop instance", err)
+		return err
+	}
 
 	err = p.Chat.Stop()
 	if err != nil {
@@ -71,7 +87,7 @@ func main() {
 	var err error
 	app := fx.New(
 		fx.Logger(new(silentPrinter)),
-		fx.Provide(settings.New, grace.New, discord.New, subday.New, twitchat.New),
+		fx.Provide(settings.New, grace.New, discord.New, subday.New, twitchat.New, web.New, youtube.New),
 		fx.Invoke(start))
 
 	err = app.Start(context.Background())

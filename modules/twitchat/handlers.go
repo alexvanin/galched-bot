@@ -10,7 +10,7 @@ type (
 	}
 
 	PrivateMessageHandler interface {
-		IsValid(string) bool
+		IsValid(m *twitch.PrivateMessage) bool
 		Handle(m *twitch.PrivateMessage, r Responser)
 	}
 )

@@ -26,7 +26,7 @@ func DupHandler() PrivateMessageHandler {
 	}
 }
 
-func (h *dupHandler) IsValid(m string) bool {
+func (h *dupHandler) IsValid(m *twitch.PrivateMessage) bool {
 	return true
 }
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.0.0 - 2020-01-11
+### Added
+- Twitch point song request feature with dedicated web server and twitch
+chat handler 
+- Mentions of `!galched` command in bot messages
+- Chiki-briki song for discord bot
+
+### Fixed
+- Typos in the bot messages
+
+### Changed
+- Updated `go-twitch-irc` lib to v2.2.1
+
 ## 4.2.0 - 2019-10-20
 ### Added
 - Universal song handler with polka and sax commands

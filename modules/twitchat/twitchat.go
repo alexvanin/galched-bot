@@ -2,6 +2,7 @@ package twitchat
 
 import (
 	"galched-bot/modules/settings"
+	"galched-bot/modules/youtube"
 
 	"github.com/gempir/go-twitch-irc/v2"
 )
@@ -14,12 +15,14 @@ type (
 	}
 )
 
-func New(s *settings.Settings) (*TwitchIRC, error) {
+func New(s *settings.Settings, r *youtube.Requester) (*TwitchIRC, error) {
 	var irc = new(TwitchIRC)
 
 	irc.username = s.TwitchUser
 
 	irc.handlers = append(irc.handlers, DupHandler())
+	irc.handlers = append(irc.handlers, SongRequest(r))
+	// irc.handlers = append(irc.handlers, LogCheck())
 
 	irc.chat = twitch.NewClient(s.TwitchUser, s.TwitchToken)
 	irc.chat.OnPrivateMessage(irc.PrivateMessageHandler)
@@ -45,7 +48,7 @@ func (c *TwitchIRC) PrivateMessageHandler(msg twitch.PrivateMessage) {
 		return
 	}
 	for i := range c.handlers {
-		if c.handlers[i].IsValid(msg.Message) {
+		if c.handlers[i].IsValid(&msg) {
 			c.handlers[i].Handle(&msg, c.chat)
 		}
 	}
