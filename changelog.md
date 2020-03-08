@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.1 - 2020-03-08
+### Changed
+- Updated `go-twitch-irc` lib to v2.2.2
+
+
 ## 5.0.0 - 2020-01-11
 ### Added
 - Twitch point song request feature with dedicated web server and twitch
