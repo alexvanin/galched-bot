@@ -8,12 +8,13 @@ import (
 )
 
 const (
-	version          = "5.0.1"
+	version          = "5.1.0"
 	twitchUser       = "galchedbot"
 	twitchIRCRoom    = "galched"
 	discordTokenPath = "./tokens/.discordtoken"
 	twitchTokenPath  = "./tokens/.twitchtoken"
 	subdayDataPath   = "./backups/subday"
+	petDataPath      = "./backups/pets"
 	youtubeTokenPath = "./tokens/.youtubetoken"
 	webLoginsPath    = "./tokens/.weblogins"
 
@@ -43,6 +44,7 @@ type (
 		TwitchToken         string
 		YoutubeToken        string
 		SubdayDataPath      string
+		PetDataPath         string
 		PermittedRoles      []string
 		DiscordVoiceChannel string
 		Songs               []SongInfo
@@ -85,6 +87,7 @@ func New() (*Settings, error) {
 		TwitchUser:          twitchUser,
 		TwitchIRCRoom:       twitchIRCRoom,
 		SubdayDataPath:      subdayDataPath,
+		PetDataPath:         petDataPath,
 		DiscordVoiceChannel: "301793085522706432",
 		PermittedRoles:      []string{subRole1, subRole2, galchedRole, smorcRole},
 		Songs: []SongInfo{

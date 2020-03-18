@@ -1,6 +1,7 @@
 package twitchat
 
 import (
+	"galched-bot/modules/patpet"
 	"galched-bot/modules/settings"
 	"galched-bot/modules/youtube"
 
@@ -15,13 +16,15 @@ type (
 	}
 )
 
-func New(s *settings.Settings, r *youtube.Requester) (*TwitchIRC, error) {
+func New(s *settings.Settings, r *youtube.Requester, pet *patpet.Pet) (*TwitchIRC, error) {
 	var irc = new(TwitchIRC)
 
 	irc.username = s.TwitchUser
 
 	irc.handlers = append(irc.handlers, DupHandler())
+	irc.handlers = append(irc.handlers, DailyEmote())
 	irc.handlers = append(irc.handlers, SongRequest(r))
+	irc.handlers = append(irc.handlers, PetCat(pet))
 	// irc.handlers = append(irc.handlers, LogCheck())
 
 	irc.chat = twitch.NewClient(s.TwitchUser, s.TwitchToken)

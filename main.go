@@ -8,6 +8,7 @@ import (
 
 	"galched-bot/modules/discord"
 	"galched-bot/modules/grace"
+	"galched-bot/modules/patpet"
 	"galched-bot/modules/settings"
 	"galched-bot/modules/subday"
 	"galched-bot/modules/twitchat"
@@ -87,7 +88,8 @@ func main() {
 	var err error
 	app := fx.New(
 		fx.Logger(new(silentPrinter)),
-		fx.Provide(settings.New, grace.New, discord.New, subday.New, twitchat.New, web.New, youtube.New),
+		fx.Provide(settings.New, grace.New, discord.New, subday.New,
+			twitchat.New, web.New, youtube.New, patpet.New),
 		fx.Invoke(start))
 
 	err = app.Start(context.Background())

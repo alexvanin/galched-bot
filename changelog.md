@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0 - 2020-03-18
+### Added
+- PetCat twitch chat handler
+- DailyEmote twitch chat handler
+
 ## 5.0.1 - 2020-03-08
 ### Changed
 - Updated `go-twitch-irc` lib to v2.2.2
